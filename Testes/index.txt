@@ -82,3 +82,7 @@ class JulgamentoPrisioneiroTest {
 	}
 
 }
+
+
+ETAPA 3 
+Observação: ao trocar o primeiro código da classe JulgamentoPrisioneiro para o segundo código, o primeiro erro que apresenta é a falta de declaração do tipo "Resposta";
