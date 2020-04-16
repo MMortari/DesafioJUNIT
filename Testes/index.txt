@@ -86,3 +86,11 @@ class JulgamentoPrisioneiroTest {
 
 ETAPA 3 
 Observação: ao trocar o primeiro código da classe JulgamentoPrisioneiro para o segundo código, o primeiro erro que apresenta é a falta de declaração do tipo "Resposta";
+
+
+ETAPA 4
+Observação: para corrigir o problema do código criei uma enum Resposta, como mostra no código abaixo;
+
+public enum Resposta {
+	DELACAO, NAO_DELACAO
+}
