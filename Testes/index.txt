@@ -94,3 +94,90 @@ Observação: para corrigir o problema do código criei uma enum Resposta, como 
 public enum Resposta {
 	DELACAO, NAO_DELACAO
 }
+
+
+ETAPA 5
+Observação: 
+1 - o primeiro erro que apresenta nos testes é que o método "calculaPena" espera uma ENUM e não uma string, para arrumar, troquei a string pela ENUM;
+
+2 - o segundo erro é que agora os valores esperados não batem com os valores retornados, para arrumar isso, arrumei os retorno da classe JulgamentoPrisioneiro, ficando dessa forma
+
+JulgamentoPrisioneiro.java
+
+package Prisioneiro;
+
+public class JulgamentoPrisioneiro {
+	private int PENA_INOCENCIA = 0;
+	private int PENA_CONDENACAO_MUTUA = 5;
+	private int PENA_CONDENACAO_INDIVIDUAL = 10;
+	private int PENA_CONDENACAO_CUMPLICES = 1;
+
+	public int calculaPena(Resposta respostaPrisioneiroA, Resposta respostaPrisioneiroB) {
+
+		if (respostaPrisioneiroA == Resposta.DELACAO) {
+
+			if (respostaPrisioneiroB == Resposta.DELACAO) {
+				return PENA_CONDENACAO_MUTUA;
+			} else {
+				return PENA_CONDENACAO_INDIVIDUAL;
+			}
+
+		} else {
+
+			if (respostaPrisioneiroB == Resposta.DELACAO) {
+				return PENA_CONDENACAO_CUMPLICES;
+			} else {
+				return PENA_INOCENCIA;
+			}
+		}
+	}
+
+}
+
+JulgamentoPrisioneiroTest.java
+
+package Prisioneiro;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class JulgamentoPrisioneiroTest {
+
+	@Test
+	void testPenaCondenacaoMutua() {
+		JulgamentoPrisioneiro julgamentoPrisioneiro = new JulgamentoPrisioneiro();
+		
+		int retorno = julgamentoPrisioneiro.calculaPena(Resposta.DELACAO, Resposta.DELACAO);
+		
+		assertEquals(retorno, 5);
+	}
+	
+	@Test
+	void testPenaCondenacaoIndividual() {
+		JulgamentoPrisioneiro julgamentoPrisioneiro = new JulgamentoPrisioneiro();
+		
+		int retorno = julgamentoPrisioneiro.calculaPena(Resposta.DELACAO, Resposta.NAO_DELACAO);
+		
+		assertEquals(retorno, 10);
+	}
+	
+	@Test
+	void testPenaCondenacaoCumplice() {
+		JulgamentoPrisioneiro julgamentoPrisioneiro = new JulgamentoPrisioneiro();
+		
+		int retorno = julgamentoPrisioneiro.calculaPena(Resposta.NAO_DELACAO, Resposta.DELACAO);
+		
+		assertEquals(retorno, 1);
+	}
+	
+	@Test
+	void testPenaInocencia() {
+		JulgamentoPrisioneiro julgamentoPrisioneiro = new JulgamentoPrisioneiro();
+		
+		int retorno = julgamentoPrisioneiro.calculaPena(Resposta.NAO_DELACAO, Resposta.NAO_DELACAO);
+		
+		assertEquals(retorno, 0);
+	}
+
+}
